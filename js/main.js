@@ -4,35 +4,12 @@
   const model = document.querySelector("#model");
   const hotspots = document.querySelectorAll(".Hotspot");
 
-  const materialTemplate = document.querySelector("#material-template");
-  const materialList = document.querySelector("#material-list");
+  // const materialTemplate = document.querySelector("#material-template");
+  // const materialList = document.querySelector("#material-list");
   // we're gonna make a copy of this and then mostrarla con js
 
-  //This information needs to be removed then pulled with an AJAX Call using the Fetch API
+ 
   //this is the api url https://swiftpixel.com/earbud/api/infoboxes"
-
-  // const infoBoxes = [
-  //   {
-  //     title: 'Noise-cancelling microphones',
-  //     text: 'Noise-cancelling microphones and a rear copper shield are optimally placed to quickly detect outside noises, working together to counter noise before it disturbs your experience.',
-  //     image: 'images/ear-piece.jpg'
-  //   },
-  //   {
-  //     title: 'Comfortable fit',
-  //     text: 'Three pairs of ultra comfortable silicone tips are included. The tips create an acoustic seal that blocks outside audio and secures the earbuds in place.',
-  //     image: 'images/ear-piece.jpg'
-  //   },
-  //   {
-  //     title: '360 AUDIO',
-  //     text: '360 Audio places sound all around you, while Dolby Head Tracking™ technology delivers an incredible three-dimensional listening experience.',
-  //     image: 'images/ear-piece.jpg'
-  //   },
-  //   {
-  //     title: 'Ultra Fast Charging',
-  //     text: 'Charge your earbuds in 30 minutes or less with our hyper charging technology.',
-  //     image: 'images/ear-piece.jpg'
-  //   },
-  // ];
 
     //This information needs to be removed then pulled with an AJAX Call using the Fetch API
     //this is the api url https://swiftpixel.com/earbud/api/materials"
@@ -67,7 +44,44 @@
     });
   }
 
-  function loadInfoBoxes() { 
+  function InfoBoxesLoaded() { 
+    // spinner before the information displays
+    // hotspots.innerHTML = spinner;
+    fetch("https://swiftpixel.com/earbud/api/infoboxes")
+    .then(response => response.json())
+    .then(boxes=> {
+      console.log(boxes); 
+      
+        boxes.forEach((box, index) => {
+        let selected = document.querySelector(`#hotspot-${index+1}`);
+        
+        const titleElement = document.createElement("h3");
+        titleElement.textContent = box.heading;
+
+        const textElement = document.createElement("p");
+        textElement.textContent = box.description;
+
+        // get an img
+        const thumbnail = document.createElement("img");
+        thumbnail.src = `images/${box.thumbnail}`;
+
+
+        selected.appendChild(thumbnail);
+        selected.appendChild(titleElement);
+        selected.appendChild(textElement);
+    });
+
+    // spot spinner
+    // peopleCon.innerHTML = "";
+    // peopleCon.appendChild(ul);   
+
+    })
+    .catch((error) => console.error("error message", error)
+    ); //catch and report any errors
+  }
+
+  InfoBoxesLoaded();
+
 
     //make AJAX call here:
     // https://swiftpixel.com/earbud/api/infoboxes"
@@ -90,71 +104,34 @@
   // }
   // loadInfoBoxes();
 
-  // spinner before the information displays
-  hotspots.innerHTML = spinner;
-  fetch("https://swiftpixel.com/earbud/api/infoboxes")
-  .then(response => response.json())
-  .then(hotspot => {
-    console.log(hotspot); 
-
-    let ul = document.createElement("ul");
-    
-    hotspot.results.forEach(result => {
-     
-      const li = document.createElement("li");
-
-      const p = document.createElement("p");
-      p.textContent = result.email;
-
-      // get an img
-      const thumbnail = document.createElement("img");
-      thumbnail.src = result.picture.thumbnail;
-
-      const h3 = document.createElement("h3");
-      h3.textContent = `${result.name.first} ${result.name.last}`;
-
-
-      li.appendChild(img);
-      li.appendChild(h3);
-      li.appendChild(p);
-      ul.appendChild(li);
-  });
-  peopleCon.innerHTML = "";
-  peopleCon.appendChild(ul);   
-
-  })
-  .catch(error => console.error(error)); //catch and report any errors
-}
-
-loadInfoBoxes();
-
+  
   // accessing to the array
-  function loadMaterialInfo(){
+  // function loadMaterialInfo(){
 
-    // AJAX CALL
-    // https://swiftpixel.com/earbud/api/materials"
+  //   // AJAX CALL
+  //   // https://swiftpixel.com/earbud/api/materials"
 
 
-    // take every entry in the materialListData then put it in the material li
-    materialListData.forEach(material => {
-      // clone the template - copy of the template
-      const clone = materialTemplate.content.cloneNode(true);
+  //   // take every entry in the materialListData then put it in the material li
+  //   materialListData.forEach(material => {
+  //     // clone the template - copy of the template
+  //     const clone = materialTemplate.content.cloneNode(true);
 
-      // populating the template - HEADING
-      const materialHeading = clone.querySelector(".material-heading");
-      materialHeading.textContent = material.heading;
+  //     // populating the template - HEADING
+  //     const materialHeading = clone.querySelector(".material-heading");
+  //     materialHeading.textContent = material.heading;
 
-      //  Populating DESCRIPTION
-      const materialDescription = clone.querySelector(".material-description");
-      materialDescription.textContent = material.description;
+  //     //  Populating DESCRIPTION
+  //     const materialDescription = clone.querySelector(".material-description");
+  //     materialDescription.textContent = material.description;
 
-      // now adding back to the list 
-      // append the populated template to the list
-      materialList.appendChild(clone);
-    })
+  //     // now adding back to the list 
+  //     // append the populated template to the list
+  //     materialList.appendChild(clone);
+  //   })
 
-  }
-  loadMaterialInfo();
+  // }
+  // loadMaterialInfo();
 
   function showInfo() {
     let selected = document.querySelector(`#${this.slot}`);
@@ -166,7 +143,7 @@ loadInfoBoxes();
     gsap.to(selected, 1, { autoAlpha: 0 });
   }
 
-  //Event listeners
+  // //Event listeners
   model.addEventListener("load", modelLoaded);
 
   hotspots.forEach(function (hotspot) {
