@@ -105,6 +105,7 @@
         const thumbnail = document.createElement("img");
         thumbnail.src = `images/${box.thumbnail}`;
 
+<<<<<<< Updated upstream
         
         selected.appendChild(thumbnail);
         selected.appendChild(titleElement);
@@ -115,6 +116,16 @@
       
       // model.appendChild(InfoBoxesLoaded); 
       
+=======
+  // spinner before the information displays
+  // hotspots.innerHTML = spinner;
+  fetch("https://swiftpixel.com/earbud/api/infoboxes")
+  .then(response => response.json())
+  .then(hotspot => {
+    console.log(hotspot); 
+
+    let ul = document.createElement("ul");
+>>>>>>> Stashed changes
     
       })
       .catch(error => console.error(error));
