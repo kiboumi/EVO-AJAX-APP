@@ -4,8 +4,11 @@
   const model = document.querySelector("#model");
   const hotspots = document.querySelectorAll(".Hotspot");
 
+  const mainBox = document.querySelector("#main-box");
   const materialTemplate = document.querySelector("#material-template");
   const materialList = document.querySelector("#material-list");
+
+  const errorMessageBox = `<img src="images/error-vector.png">`
 
   let spinner = `
   <?xml version="1.0" encoding="utf-8"?>
@@ -105,7 +108,6 @@
         const thumbnail = document.createElement("img");
         thumbnail.src = `images/${box.thumbnail}`;
 
-<<<<<<< Updated upstream
         
         selected.appendChild(thumbnail);
         selected.appendChild(titleElement);
@@ -116,21 +118,13 @@
       
       // model.appendChild(InfoBoxesLoaded); 
       
-=======
-  // spinner before the information displays
-  // hotspots.innerHTML = spinner;
-  fetch("https://swiftpixel.com/earbud/api/infoboxes")
-  .then(response => response.json())
-  .then(hotspot => {
-    console.log(hotspot); 
-
-    let ul = document.createElement("ul");
->>>>>>> Stashed changes
     
       })
-      .catch(error => console.error(error));
-      // .catch((error) => console.error("Oops, it seems like something is broken", error)
-      // ); //catch and report any errors
+
+      .catch(error => {
+        mainBox.innerHTML = errorMessageBox;
+        console.error('Oops, there is an error. Please check the API connection and try again ', error);
+    });
     }
 
     loadInfoBoxes();
@@ -139,6 +133,7 @@
       fetch("https://swiftpixel.com/earbud/api/materials")
       .then(response => response.json())
       .then(material_list => {
+        console.log(materialList);
       
         
         material_list.forEach(material => {
@@ -153,14 +148,12 @@
   
           materialList.appendChild(clone);
       }); 
-  
+      
       })
       .catch(error => {
-        materialBox.innerHTML = errorMessageBox;
-        console.error('There was an error!', error);
-        // .catch((error) => console.error("Oops, it seems like something is broken", error)
-      // ); //catch and report any errors
-    });
+        model.innerHTML = errorMessageBox;
+        console.error('Oops, there is an error. Please check the API connection and try again ', error); 
+      });
 
     }
   
