@@ -74,14 +74,17 @@
     //this is the api url https://swiftpixel.com/earbud/api/materials"
 
   //functions
+
+
   function modelLoaded() {
-    
     hotspots.forEach(hotspot => {
       hotspot.style.display = "block";
+    
     });
   }
-  
+
   function loadInfoBoxes() { 
+    spinnerSection.innerHTML = spinner;
     // spinner before the information displays
     // model.innerHTML = spinner;
     fetch("https://swiftpixel.com/earbud/api/infoboxes")
@@ -106,9 +109,10 @@
         selected.appendChild(thumbnail);
         selected.appendChild(titleElement);
         selected.appendChild(textElement);
+        spinnerSection.innerHTML = "";
   }); 
       // stop spinner
-      // model.innerHTML = "";
+      
       // model.appendChild(InfoBoxesLoaded); 
       
     
@@ -171,6 +175,8 @@
     hotspot.addEventListener("mouseenter", showInfo);
     hotspot.addEventListener("mouseleave", hideInfo);
   });
+
+
 
 })();
 

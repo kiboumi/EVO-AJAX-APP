@@ -1,5 +1,9 @@
   // Customize our own hotspot 
 
+  .hidden {
+    display: none; /* or visibility: hidden; */
+  }
+
   model-viewer {
     width: auto;
     max-width: 1200px;
